@@ -1,5 +1,6 @@
 package com.phucduyen.database.models.entity_models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,17 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "employee_request")
-public class EmployeeRequest {
+@Table(name = "user_request")
+public class UserRequest {
     @Id
-    @GeneratedValue//do sài SQL server nên ghi như v được: tương ứng với GeneratedValue.Identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "request_id")
     private Request request;
-
-    @ManyToOne
-    @JoinColumn(name = "employe_id")
-    private Employee employee;
 }

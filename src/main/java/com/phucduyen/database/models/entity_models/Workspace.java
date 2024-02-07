@@ -1,5 +1,6 @@
 package com.phucduyen.database.models.entity_models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,22 +10,23 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "workspace")
 public class Workspace {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
 
-    @OneToMany(mappedBy = "workspace")
-    private List<RequestDetail> requestDetailList;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "request_id")
+    private Request request;
+
+    @OneToMany(mappedBy = "workspace")
+    private List<Product> productList;
 }

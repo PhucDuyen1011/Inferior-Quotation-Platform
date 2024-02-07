@@ -1,16 +1,17 @@
 package com.phucduyen.database.models.entity_models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.sql.Date;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "request")
@@ -21,14 +22,20 @@ public class Request {
 
     private String name;
     private String address;
-    private String area;
-    private float total;
+    private Date createDate;
+    private Date endDate;
+    private float totalPrice;
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private boolean type;
 
     @OneToMany(mappedBy = "request")
-    private List<EmployeeRequest> employeeRequestList;
+    private List<UserRequest> userRequestList;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "requestStatus_id")
+    private RequestStatus requestStatus;
+
+    @OneToMany(mappedBy = "request")
+    private List<Workspace> workspaceList;
 }

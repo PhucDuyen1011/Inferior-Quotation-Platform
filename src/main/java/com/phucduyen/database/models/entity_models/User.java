@@ -9,23 +9,24 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String phone;
     private String idCard;
 
-    @OneToOne //lý do mqh 1-1 chỉ gắn 1 bên, vì ko phải lúc nào account cũng sẽ có cus
-                //cus có gắn mqh là do nó phụ thuộc vào account
+    @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Request> requests;
+    @OneToMany(mappedBy = "user")
+    private List<UserRequest> userRequestList;
+
 }

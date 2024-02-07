@@ -9,20 +9,18 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "employee")
-public class Employee {
+@Table(name = "status")
+public class AccountStatus {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    private String status;
 
-    @OneToMany(mappedBy = "employee")
-    private List<EmployeeRequest> employeeRequestList;
+    @OneToMany(mappedBy = "status")
+    private List<Account> accountsList;
 }
